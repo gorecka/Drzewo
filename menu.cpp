@@ -67,6 +67,7 @@ void Menu::control() {
 				}
 				cout << "Wyniki wyszukiwania to: "<<endl;
 				nameCollection->find(nameCollection->root, name, 1);
+				cout << endl;
 				break;
 			}
 			case 4: {   //dodawanie dziela
@@ -140,6 +141,7 @@ void Menu::control() {
 					}
 					cout << "Wyniki wyszukiwania to: "<<endl;
 					titleCollection->find(titleCollection, title, 0);
+					cout << endl;
 				break;
 			}
 			case 7:{  //wyjscie
