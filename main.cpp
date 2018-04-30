@@ -4,15 +4,16 @@
 #include "read.hpp"
 #include "menu.hpp"
 #include "tests.hpp"
+#include "painting.hpp"
+#include "paintingcontroller.hpp"
 
-/* run this program using the console pauser or add your own getch, system("pause") or input loop */
 
 int main() {
 	Tests test;
 	try {
 	test.testFind();
 	test.testRead();
-	test.testRemove();
+	test.testRemove();  //przy poprawnym dzialaniu funkcji wyswietli sie komunikat "Nie ma elementu spelniajacego warunek" co pokazuje, ze usunieto podany element
 	}
 	catch (const char * a) {
 		cout << "Testy znalazly blad" << endl;

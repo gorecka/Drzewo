@@ -1,32 +1,41 @@
 #include "read.hpp"
 
-Tree<string>* Read::readFromFile(int term) {  
+Tree<Painting>* Read::readFromFileTitle() {  
 		fstream file;
 		file.open("artist.txt");
 		string title, name;
-		Tree<string>* Collection;
-		if(term == 0) {
+		Tree<Painting>* Collection;
+		getline(file, title);
+		getline(file, name);
+		Painting painting(title, name);
+		Collection = new Tree<Painting>(painting);
+		while(!file.eof()){
 			getline(file, title);
 			getline(file, name);
-			Collection = new Tree<string>(title, name, 0);
-			while(!file.eof()){
-				getline(file, title);
-				getline(file, name);
-				Tree<string>* Element = new Tree<string>(title, name, 0, Collection);
-				Collection->addLeaf(Collection, Element);
-			}	
-		} 
-		else{
-			getline(file, title);
-			getline(file, name);
-			Collection = new Tree<string>(name, title, 1);
-			while(!file.eof())	{
-				getline(file, title);
-				getline(file, name);
-				Tree<string>* Element = new Tree<string>(name, title, 1, Collection);
-				Collection->addLeaf(Collection, Element);
-			}	
-		}
+			Painting painting(title, name);
+			Tree<Painting>* Element = new Tree<Painting>(painting, Collection);
+			Collection->addLeaf(Collection, Element);
+		}	
 		file.close();
-		return Collection;
+		return Collection->root;
 	}
+	
+Tree<Painting>* Read::readFromFileAuthor() {
+	fstream file;
+	file.open("artist.txt");
+	string title, name;
+	Tree<Painting>* Collection;
+	getline(file, title);
+	getline(file, name);
+	Painting painting(name, title);
+	Collection = new Tree<Painting>(painting);
+	while(!file.eof())	{
+		getline(file, title);
+		getline(file, name);
+		Painting painting(name, title);
+		Tree<Painting>* Element = new Tree<Painting>(painting, Collection);
+		Collection->addLeaf(Collection, Element);
+	}
+	file.close();
+	return Collection->root;	
+}

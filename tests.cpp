@@ -1,25 +1,39 @@
 #include "tests.hpp"
 
-void Tests::testRead (){
+void Tests::testRead (){ //czy wszytywanie z pliku dziala
 			Read read;
-			if(!(read.readFromFile(1)))
+			if(!(read.readFromFileTitle()))
 			throw "wszytywanie z pliku nie dziala";
 		}
-void Tests::testFind() {
-			Tree<string>* testCollection = new Tree<string>("Tytul", "Autor",0);
-			Tree<string>* Element = new Tree<string>("Kolejny", "Kogos", 0, testCollection);
+void Tests::testFind() { //czy funkcja wyszukujaca dziala poprawnie
+			Painting painting("Tytul", "Autor");
+			Tree<Painting>* testCollection = new Tree<Painting>(painting);
+			Painting painting1("Kolejny", "Kogos");
+			Tree<Painting>* Element = new Tree<Painting>(painting1, testCollection);
 			testCollection->addLeaf(testCollection, Element);
-			int value = (testCollection->find(testCollection->root, "Tytul", 0));
-			testCollection->removeTree(testCollection->root);
-			if(value == 0) {
+			PaintingController paintingController;
+			vector<Painting> result;
+			paintingController.search("Tytul", testCollection, result);
+			testCollection->removeTree(testCollection);
+			if(result[0].getTitle() != "Tytul") {
 				throw "wyszukiwanie nie dzial";
 			}
 		}
-void Tests::testRemove() {
-			Tree<string>* testCollection = new Tree<string>("Tytul", "Autor",0);
-			Tree<string>* Element = new Tree<string>("Kolejny", "Kogos", 0, testCollection);
-			Tree<string>*Element1 = new Tree<string> ("Alabaster", "Aktor", 1, testCollection);
-			if(!(testCollection->removeTree(testCollection->root)))
-			throw "usuwanie nie dziala"; 
-			
+void Tests::testRemove() {   //Czy poprawnie usuwa podany element
+			Painting painting("Tytul", "Autor");
+			Tree<Painting>* testCollection = new Tree<Painting>(painting);
+			Painting painting1("Kolejny", "Kogos");
+			Tree<Painting>* Element = new Tree<Painting>(painting1, testCollection);
+			testCollection->addLeaf(testCollection, Element);
+			Painting painting2("Alabaster", "Jakis aktor");
+			Tree<Painting>*Element1 = new Tree<Painting> (painting2, testCollection);
+			testCollection->addLeaf(testCollection, Element1);
+			testCollection->removeNode(testCollection, painting2);
+			PaintingController paintingController;
+			vector<Painting> result;
+			paintingController.search("Alabaster", testCollection, result);
+			result.push_back(painting);
+			if(result[0].getTitle() == "Alabaster") {
+				throw "usuwanie nie dziala"; 
+			}	
 		}

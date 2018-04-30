@@ -4,13 +4,16 @@
 #include <iostream>
 #include "tree.hpp"
 #include "read.hpp"
+#include "painting.hpp"
+#include "paintingcontroller.hpp"
+#include <stdio.h>
 
 
 
 class Menu {
 	public:
-	void display(string data1, string data2, int term);   //wyswietlanie elementu
-	void displayAll(Tree<string>* current); 	//wyswietlanie calego drzewa
+	void display(Painting painting);   //wyswietlanie elementu
+	void displayAll(Tree<Painting>* current); 	//wyswietlanie calego drzewa
     void control();		//menu uzytkownika
 };
 

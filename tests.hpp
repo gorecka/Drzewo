@@ -4,6 +4,7 @@
 #include "tree.hpp"
 #include "menu.hpp"
 #include "read.hpp"
+#include "painting.hpp"
 
 class Tests {
 	public:

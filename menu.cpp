@@ -1,29 +1,23 @@
 #include "menu.hpp"
 
-void Menu::display(string data1, string data2, int term) {   
-		if(term == 0){ // Drzewo sortowane po tytu³ach
-		cout << "Tytul: " << data1 << " |  Autor: " << data2 << endl;
-		cout << "------------------------------------------------------------------------------" << endl;
-		}
-		else
-		if(term == 1){ //drzewo sortowane po autorach
-			cout << "Autor: " << data1 << " |  Tytul: " << data2 <<endl;
-			cout << "------------------------------------------------------------------------------" << endl;
-		}
+void Menu::display(Painting painting) {   
+		printf("%-20s | %s\n", painting.getTitle().c_str(), painting.getAuthor().c_str());
+		cout << "-----------------------------------------------------------------" << endl;
 	}
-void Menu::displayAll(Tree<string>* current) {
+void Menu::displayAll(Tree<Painting>* current) {
 		if(current->left) {
             displayAll(current->left);
 		}
-		display(current->data1, current->data2, current->configuration);
+		display(current->data1);
 		if(current->right) {
             displayAll(current->right);
 		}
     }
 void Menu::control() {
         Read read;
-    	Tree<string>* titleCollection = read.readFromFile(0);
-    	Tree<string>* nameCollection = read.readFromFile(1);
+        PaintingController paintingController;
+    	Tree<Painting>* titleCollection = read.readFromFileTitle();
+    	Tree<Painting>* nameCollection = read.readFromFileAuthor();
     	while(1){
     		int choice;
     		cout << "Co chcesz zrobic?" << endl;
@@ -43,17 +37,25 @@ void Menu::control() {
     			continue;
 			}
 			cin.ignore();
+			
     		switch(choice){
     		case 1: {  //wyswietlanie po tytulach
-    			displayAll(titleCollection->root);
+    			cout << "-----------------------------------------------------------------" << endl;
+    			printf("%-20s | %s\n", "Tytul", "Autor");
+				cout << "-----------------------------------------------------------------" << endl;
+    			displayAll(titleCollection);
     			break;
 			}
 			case 2: {  //wyswietlanie po autorach
-				displayAll(nameCollection->root);
+				cout << "-----------------------------------------------------------------" << endl;
+				printf("%-20s | %s\n", "Autor", "Tytul");
+				cout << "-----------------------------------------------------------------" << endl;
+				displayAll(nameCollection);
 				break;
 			}
 			case 3: {   //wyszukiwanie po autorze
 				string name;
+				vector<Painting> result;
 				while(1){
 				cout << "Podaj autora" << endl;
 				getline(cin, name);
@@ -65,8 +67,16 @@ void Menu::control() {
 				}
 				break;
 				}
-				cout << "Wyniki wyszukiwania to: "<<endl;
-				nameCollection->find(nameCollection->root, name, 1);
+				cout << "Wyniki wyszukiwania to: "<<endl << endl;
+				PaintingController Controller;
+				paintingController.search(name, nameCollection, result);
+				cout << "-----------------------------------------------------------------" << endl;
+				printf("%-20s | %s\n", "Autor", "Tytul");
+				cout << "-----------------------------------------------------------------" << endl;
+				for(int i = 0; i < result.size(); i++) {
+					printf("%-20s | %s\n", result[i].getTitle().c_str(), result[i].getAuthor().c_str());
+					cout << "-----------------------------------------------------------------" << endl;
+				}
 				cout << endl;
 				break;
 			}
@@ -94,11 +104,13 @@ void Menu::control() {
 				}
 				break;
 				}
-				titleCollection->addLeaf(titleCollection->root, new Tree<string>(title, name, 0));
-				nameCollection->addLeaf(nameCollection->root, new Tree<string>(name, title, 1));
+				Painting paintingTitle(title, name);
+				titleCollection->addLeaf(titleCollection, new Tree<Painting>(paintingTitle));
+				Painting paintingAuthor(name, title);
+				nameCollection->addLeaf(nameCollection, new Tree<Painting>(paintingAuthor));
 				break;
 			}
-    		case 5: {   //uwuwanie dziela
+    		case 5: {   //usuwanie dziela
     			string title, name;
     			while(1){
     			cout << "Podaj tytul dziela do usuniecia"<<endl;
@@ -112,22 +124,25 @@ void Menu::control() {
 				break;
 				}
 				while(1) {
-				cout << "Podaj autora dziela" << endl;
-				getline(cin, name);
-				if(cin.fail()) {
-    				cout << "Niepoprawnie wprowadzony autor" << endl;
-    				cin.clear();
-    				cin.ignore();
-    				continue;
+					cout << "Podaj autora dziela" << endl;
+					getline(cin, name);
+					if(cin.fail()) {
+    					cout << "Niepoprawnie wprowadzony autor" << endl;
+    					cin.clear();
+    					cin.ignore();
+    					continue;
+					}
+					break;
 				}
-				break;
-				}
-				titleCollection->removeNode(titleCollection, title, name);
-				nameCollection->removeNode(nameCollection, name, title);
+				Painting paintingTitle(title, name);
+				Painting paintingAuthor(name, title);
+				titleCollection->removeNode(titleCollection, paintingTitle);
+				nameCollection->removeNode(nameCollection, paintingAuthor);
 				break;
 			}
 			case 6:{   //wyszukiwanie dziela
-				string title;
+				string title, author;
+				vector<Painting> result;
 				while(1){
 					cout << "Podaj tytul dziela" << endl;
 					getline(cin, title);
@@ -139,8 +154,16 @@ void Menu::control() {
 					}
 					break;
 					}
-					cout << "Wyniki wyszukiwania to: "<<endl;
-					titleCollection->find(titleCollection, title, 0);
+					cout << "Wyniki wyszukiwania to: "<<endl<< endl;
+					PaintingController paintingController;
+					paintingController.search(title, titleCollection, result);
+					cout << "-----------------------------------------------------------------" << endl;
+					printf("%-20s | %s\n", "Tytul", "Autor");
+					cout << "-----------------------------------------------------------------" << endl;
+					for(int i = 0; i < result.size(); i++ ) {
+						printf("%-20s | %s\n", result[i].getTitle().c_str(), result[i].getAuthor().c_str());
+						cout << "-----------------------------------------------------------------" << endl;
+					}
 					cout << endl;
 				break;
 			}

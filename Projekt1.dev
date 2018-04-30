@@ -28,8 +28,8 @@ Folders=
 IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=0
-CompilerSettings=00000000c0000000000000000
-UnitCount=8
+CompilerSettings=00000000c0000000001000000
+UnitCount=10
 
 [VersionInfo]
 Major=1
@@ -81,16 +81,6 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit4]
-FileName=tree.hpp
-CompileCpp=1
-Folder=
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit5]
 FileName=tests.hpp
 CompileCpp=1
 Folder=
@@ -100,7 +90,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit6]
+[Unit5]
 FileName=menu.cpp
 CompileCpp=1
 Folder=
@@ -110,7 +100,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit7]
+[Unit6]
 FileName=tests.cpp
 CompileCpp=1
 Folder=
@@ -120,7 +110,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit8]
+[Unit7]
 FileName=read.cpp
 CompileCpp=1
 Folder=
@@ -130,8 +120,28 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
+[Unit8]
+FileName=paintings.hpp
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
 [Unit9]
-FileName=read.cpp
+FileName=tree.hpp
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit10]
+FileName=paintingcontroler.hpp
 CompileCpp=1
 Folder=
 Compile=1
