@@ -29,7 +29,7 @@ IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=0
 CompilerSettings=00000000c0000000001000000
-UnitCount=10
+UnitCount=12
 
 [VersionInfo]
 Major=1
@@ -121,7 +121,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit8]
-FileName=paintings.hpp
+FileName=painting.hpp
 CompileCpp=1
 Folder=
 Compile=1
@@ -141,7 +141,27 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit10]
-FileName=paintingcontroler.hpp
+FileName=paintingcontroller.hpp
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit11]
+FileName=paintingcontroller.cpp
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit12]
+FileName=painting.cpp
 CompileCpp=1
 Folder=
 Compile=1
